@@ -1,0 +1,4 @@
+# Project exclude paths
+/amigosservice/customer/target/
+/amigosservice/eureka-server/target/
+/amigosservice/fraud/target/
