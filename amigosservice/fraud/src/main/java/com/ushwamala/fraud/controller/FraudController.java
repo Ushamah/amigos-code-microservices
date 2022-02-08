@@ -1,6 +1,6 @@
 package com.ushwamala.fraud.controller;
 
-import com.ushwamala.fraud.model.FraudCheckResponse;
+import com.ushwamala.clients.fraud.FraudCheckResponse;
 import com.ushwamala.fraud.service.FraudCheckService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

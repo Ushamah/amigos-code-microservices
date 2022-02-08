@@ -1,7 +1,8 @@
 package com.ushwamala.customer.service;
 
+import com.ushwamala.clients.fraud.FraudCheckResponse;
+import com.ushwamala.clients.fraud.FraudClient;
 import com.ushwamala.customer.model.CustomerRegistrationRequest;
-import com.ushwamala.customer.model.FraudCheckResponse;
 import com.ushwamala.customer.model.customer;
 import com.ushwamala.customer.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public record CustomerService(CustomerRepository customerRepository,
-                              RestTemplate restTemplate) {
+                              RestTemplate restTemplate,
+                              FraudClient fraudClient) {
     public void registerCustomer(CustomerRegistrationRequest request) {
         customer newCustomer = customer.builder()
                 .firstName(request.firstName())
@@ -24,9 +26,9 @@ public record CustomerService(CustomerRepository customerRepository,
        // TODO:check if email is not token
 
         //TODO:check if customer is fraudster
-        FraudCheckResponse fraudCheckResponse =
-                restTemplate.getForObject("http://FRAUD/api/v1/fraud-check/{customerId}",
-                FraudCheckResponse.class, newCustomer.getId());
+        final FraudCheckResponse fraudCheckResponse =
+                fraudClient.isFraudster(newCustomer.getId());
+
 
         assert fraudCheckResponse != null;
         if (fraudCheckResponse.isFraudster()) {

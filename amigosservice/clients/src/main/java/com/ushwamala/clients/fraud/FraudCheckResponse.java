@@ -1,4 +1,4 @@
-package com.ushwamala.customer.model;
+package com.ushwamala.clients.fraud;
 
 public record FraudCheckResponse(Boolean isFraudster) {
 }
