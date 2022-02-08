@@ -1,4 +1,4 @@
-package com.ushwamala.fraud.model;
+package com.ushwamala.notification.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -15,23 +15,23 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class FraudCheckHistory {
-
+public class Notification {
     @Id
-    @SequenceGenerator(name = "fraud_id_sequence",
-            sequenceName = "fraud_id_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fraud_id_sequence")
+    @SequenceGenerator(name = "notification_id_sequence",
+            sequenceName = "notification_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notification_id_sequence")
     private Integer id;
-
-    private Integer customerId;
-    private Boolean isFraudster;
-    private LocalDateTime createdAt;
+    private Integer toCustomerId;
+    private String toCustomerEmail;
+    private String message;
+    private String sender;
+    private LocalDateTime sentAt;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        FraudCheckHistory that = (FraudCheckHistory) o;
+        Notification that = (Notification) o;
         return id != null && Objects.equals(id, that.id);
     }
 
