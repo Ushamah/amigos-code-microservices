@@ -2,6 +2,8 @@ package com.ushwamala.customer.service;
 
 import com.ushwamala.clients.fraud.FraudCheckResponse;
 import com.ushwamala.clients.fraud.FraudClient;
+import com.ushwamala.clients.notification.NotificationClient;
+import com.ushwamala.clients.notification.NotificationRequest;
 import com.ushwamala.customer.model.CustomerRegistrationRequest;
 import com.ushwamala.customer.model.customer;
 import com.ushwamala.customer.repository.CustomerRepository;
@@ -11,7 +13,8 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public record CustomerService(CustomerRepository customerRepository,
                               RestTemplate restTemplate,
-                              FraudClient fraudClient) {
+                              FraudClient fraudClient,
+                              NotificationClient notificationClient) {
     public void registerCustomer(CustomerRegistrationRequest request) {
         customer newCustomer = customer.builder()
                 .firstName(request.firstName())
@@ -21,9 +24,9 @@ public record CustomerService(CustomerRepository customerRepository,
 
         customerRepository.saveAndFlush(newCustomer);
 
-       // TODO:check if email is valid
+        // TODO:check if email is valid
 
-       // TODO:check if email is not token
+        // TODO:check if email is not token
 
         //TODO:check if customer is fraudster
         final FraudCheckResponse fraudCheckResponse =
@@ -34,6 +37,15 @@ public record CustomerService(CustomerRepository customerRepository,
         if (fraudCheckResponse.isFraudster()) {
             throw new IllegalStateException("fraudster");
         }
+
+        notificationClient.sendNotification(
+                new NotificationRequest(newCustomer.getId(),
+                        newCustomer.getEmail(),
+                        String.format("Hi %s, welcome to Amigos service...",
+                                newCustomer.getFirstName())
+
+                )
+        );
 
     }
 }

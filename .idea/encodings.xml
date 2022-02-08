@@ -9,6 +9,8 @@
     <file url="file://$PROJECT_DIR$/amigosservice/eureka-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/amigosservice/fraud/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/amigosservice/fraud/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/amigosservice/notification/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/amigosservice/notification/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/amigosservice/src/main/java" charset="UTF-8" />
   </component>
 </project>

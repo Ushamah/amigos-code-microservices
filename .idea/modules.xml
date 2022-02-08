@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/amigosservice/customer/customer.iml" filepath="$PROJECT_DIR$/amigosservice/customer/customer.iml" />
       <module fileurl="file://$PROJECT_DIR$/amigosservice/eureka-server/eureka-server.iml" filepath="$PROJECT_DIR$/amigosservice/eureka-server/eureka-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/amigosservice/fraud/fraud.iml" filepath="$PROJECT_DIR$/amigosservice/fraud/fraud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/amigosservice/notification/notification.iml" filepath="$PROJECT_DIR$/amigosservice/notification/notification.iml" />
     </modules>
   </component>
 </project>
