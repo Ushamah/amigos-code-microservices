@@ -1,8 +1,8 @@
 package com.ushwamala.customer.service;
 
+import com.ushwamala.amqp.config.RabbitMQMessageProducer;
 import com.ushwamala.clients.fraud.FraudCheckResponse;
 import com.ushwamala.clients.fraud.FraudClient;
-import com.ushwamala.clients.notification.NotificationClient;
 import com.ushwamala.clients.notification.NotificationRequest;
 import com.ushwamala.customer.model.CustomerRegistrationRequest;
 import com.ushwamala.customer.model.customer;
@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 public record CustomerService(CustomerRepository customerRepository,
                               RestTemplate restTemplate,
                               FraudClient fraudClient,
-                              NotificationClient notificationClient) {
+                              RabbitMQMessageProducer rabbitMQMessageProducer) {
     public void registerCustomer(CustomerRegistrationRequest request) {
         customer newCustomer = customer.builder()
                 .firstName(request.firstName())
@@ -38,14 +38,16 @@ public record CustomerService(CustomerRepository customerRepository,
             throw new IllegalStateException("fraudster");
         }
 
-        notificationClient.sendNotification(
-                new NotificationRequest(newCustomer.getId(),
-                        newCustomer.getEmail(),
-                        String.format("Hi %s, welcome to Amigos service...",
-                                newCustomer.getFirstName())
-
-                )
+        NotificationRequest notificationRequest = new NotificationRequest(
+                newCustomer.getId(),
+                newCustomer.getEmail(),
+                String.format("Hi %s, welcome to Amigos service...", newCustomer.getFirstName())
         );
 
+        rabbitMQMessageProducer.publish(
+                notificationRequest,
+                "internal.exchange",
+                "internal.notification.routing-key"
+        );
     }
 }

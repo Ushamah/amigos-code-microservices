@@ -11,3 +11,13 @@ services:
       # Uncomment if you set SCRIBE_ENABLED=true
       # - 9410:9410
 
+  rabbitmq:
+    image: rabbitmq:3.9.11-management-alpine
+    container_name: rabbitmq
+    ports:
+      #This is for the applications to use rabbitmq
+      - "5672:5672"
+      # this is the management port
+      - "15672:15672"
+
+

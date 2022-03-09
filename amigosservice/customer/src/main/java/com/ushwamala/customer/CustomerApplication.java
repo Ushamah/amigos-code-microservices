@@ -5,7 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication
+@SpringBootApplication(
+      scanBasePackages = {
+              "com.ushwamala.customer",
+              "com.ushwamala.amqp"
+      }
+)
 @EnableEurekaClient //Shows that it is a eureka client
 @EnableFeignClients(basePackages = "com.ushwamala.clients") //This is where the feign-clients are stored
 public class CustomerApplication {
