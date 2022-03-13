@@ -5,9 +5,9 @@ spring:
   application:
     name: Customer
   datasource:
-    url: jdbc:mysql://localhost:3306/amigoscode?useSSL=false
-    username: root
-    password: Najibuhtamarah92!
+    url: jdbc:mysql://localhost:3306/amigoscode?allowPublicKeyRetrieval=true&useSSL=false
+    username: amigoscode
+    password: password
   jpa:
     hibernate:
       ddl-auto: create-drop

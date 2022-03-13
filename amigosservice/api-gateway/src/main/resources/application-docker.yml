@@ -1,0 +1,42 @@
+#application name
+spring:
+  application:
+    name: api-gateway
+
+#https://stackoverflow.com/questions/68587832/spring-cloud-gateway-spring-mvc-found-on-classpath-which-is-incompatible-with
+  main:
+    web-application-type: reactive
+
+  #zipkin configuration
+  zipkin:
+    base-url: http://zipkin:9411
+    enabled: true
+
+  #api-gateway routes configuration
+  cloud:
+    gateway:
+      routes:
+        - id: customer
+          uri: lb://CUSTOMER
+          predicates:
+            - Path=/api/v1/customers/**
+        - id: fraud
+          uri: lb://FRAUD
+          predicates:
+            - Path=/api/v1/fraud-check/**
+        - id: Notification
+          uri: lb://NOTIFICATION
+          predicates:
+            - Path=/api/v1/configuration/**
+
+#application server port configuration
+server:
+  port: 8082
+
+#Eureka server configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true

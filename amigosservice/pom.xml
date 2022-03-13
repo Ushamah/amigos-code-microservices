@@ -29,7 +29,7 @@
     <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
     <spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
     <spring-cloud.version>2020.0.3</spring-cloud.version>
-
+    <image>wamush92/${project.artifactId}:${project.version}</image>
   </properties>
 
   <dependencyManagement>
@@ -68,6 +68,8 @@
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <!--Plugins included under the pluginManagement section aren't automatically included in all submodules.
+      Only submodules which need these modules will use them-->
      <plugins>
         <plugin>
           <groupId>org.springframework.boot</groupId>
@@ -82,10 +84,45 @@
             </execution>
           </executions>
         </plugin>
+       <!--This plugin is for building docker images of the microservices-->
+       <plugin>
+         <groupId>com.google.cloud.tools</groupId>
+         <artifactId>jib-maven-plugin</artifactId>
+         <version>3.1.4</version>
+         <configuration>
+           <from>
+             <image>eclipse-temurin:17@sha256:2b47a8ea946ce1e5365a1562414ed576e378b7b670cadff3fb98ebecf2890cdc</image>
+             <platforms>
+               <platform>
+                 <architecture>arm64</architecture>
+                 <os>linux</os>
+               </platform>
+               <platform>
+                 <architecture>amd64</architecture>
+                 <os>linux</os>
+               </platform>
+             </platforms>
+           </from>
+           <to>
+             <tags>
+               <tag>latest</tag>
+             </tags>
+           </to>
+         </configuration>
+         <executions>
+           <execution>
+             <phase>package</phase>
+             <goals>
+               <goal>build</goal>
+             </goals>
+           </execution>
+         </executions>
+       </plugin>
      </plugins>
     </pluginManagement>
     <plugins>
       <!--This plugin is needed for packaging the microservices-->
+      <!--Plugins included in this section are automatically included in all submodules.-->
       <plugin>
        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
