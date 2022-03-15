@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  MYSQL_DATABASE: amigoscode
+  MYSQL_USER: amigoscode
+  MYSQL_PASSWORD: password
+
