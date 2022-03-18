@@ -1,23 +1,25 @@
-#server:
-#  port: 8081
 #
+#server:
+#  port: 8083
 #spring:
 #  application:
-#    name: Fraud
+#    name: notification
 #  datasource:
-#    url: jdbc:mysql://mysql:3306/amigoscode?allowPublicKeyRetrieval=true&useSSL=false
-#    username: amigoscode
 #    password: password
+#    url: jdbc:postgresql://postgres:5432/notification
+#    username: amigoscode
 #  jpa:
 #    hibernate:
 #      ddl-auto: create-drop
 #    properties:
 #      hibernate:
-#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
 #    show-sql: true
 #  zipkin:
 #    base-url: http://zipkin:9411
-#
+#  rabbitmq:
+#    addresses: rabbitmq:5672
 #eureka:
 #  client:
 #    service-url:
@@ -25,12 +27,20 @@
 #    fetch-registry: true
 #    register-with-eureka: true
 #    enabled: false
+#
+#rabbitmq:
+#  exchanges:
+#    internal: internal.exchange
+#  queues:
+#    notification: notification.queue
+#  routing-keys:
+#    internal-notification: internal.notification.routing-key
 
 server:
-  port: 8081
+  port: 8083
 spring:
   application:
-    name: fraud
+    name: notification
   datasource:
     password: password
     url: jdbc:postgresql://postgres:5432/amigoscode
@@ -45,7 +55,8 @@ spring:
     show-sql: true
   zipkin:
     base-url: http://zipkin:9411
-
+  rabbitmq:
+    addresses: rabbitmq:5672
 eureka:
   client:
     service-url:
@@ -53,3 +64,11 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     enabled: false
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key

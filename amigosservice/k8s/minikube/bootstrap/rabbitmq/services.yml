@@ -20,4 +20,3 @@ spec:
       nodePort: 30672
   selector:
     app: rabbitmq
-  © 2022 GitHub, Inc.

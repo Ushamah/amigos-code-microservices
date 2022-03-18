@@ -1,19 +1,19 @@
 #server:
 #  port: 8081
-#
 #spring:
 #  application:
-#    name: Fraud
+#    name: fraud
 #  datasource:
-#    url: jdbc:mysql://mysql:3306/amigoscode?allowPublicKeyRetrieval=true&useSSL=false
-#    username: amigoscode
 #    password: password
+#    url: jdbc:postgresql://postgres:5432/fraud
+#    username: amigoscode
 #  jpa:
 #    hibernate:
 #      ddl-auto: create-drop
 #    properties:
 #      hibernate:
-#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
 #    show-sql: true
 #  zipkin:
 #    base-url: http://zipkin:9411
@@ -24,7 +24,9 @@
 #      defaultZone: http://eureka-server:8761/eureka
 #    fetch-registry: true
 #    register-with-eureka: true
+#    #This disables the eureka server in the kubernetes profile because kubernetes has a built-in service which does the same things as the eureka-server
 #    enabled: false
+
 
 server:
   port: 8081
